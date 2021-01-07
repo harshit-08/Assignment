@@ -1,0 +1,84 @@
+.infoSidebar{
+    padding: 20px;
+    height: 100vh;
+    flex: 0.2;
+    background-color: #00adb5;
+    display: flex;
+    flex-direction: column;
+}
+.infoSidebar h2{
+    color: #364f6b;
+}
+.infoSidebar h3{
+    color: gray;
+}
+.infoSidebar__userName{
+    background-color: #e3fdfd;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.infoSidebar__email{
+    background-color: #e3fdfd;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.infoSidebar__verfified{
+    display: flex;
+    align-content: space-between;
+    align-items: baseline;
+    background-color: #e3fdfd;
+    width: fit-content;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.infoSidebar__verfified__cancel{
+    color: red;
+    margin-left: 20px;
+}
+.infoSidebar__verfified__check{
+    color: green;
+    margin-left: 20px;
+}
+.infoSidebar button{
+    
+    margin-top: 50px;
+    height: 45px;
+    width: 100px;
+    flex: 0.3;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    outline-color: white;
+    cursor: pointer;  
+}
+.infoSidebar button:hover{
+    margin-top: 50px;
+    height: 45px;
+    width: 100px;
+    flex: 0.3;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    outline-color: white;
+    cursor: pointer;  
+    color: white;
+    background-color: gray;
+}
+
+.infoSidebar__logout{
+    /* display: flex; */
+    align-items: center;
+    align-content: center;
+    
+}
+.icon{
+    font-size: large;
+}
+

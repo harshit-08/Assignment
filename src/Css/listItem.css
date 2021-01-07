@@ -1,0 +1,28 @@
+.listItem__ul{
+    
+    /* align-content: space-between; */
+}
+ul{
+    display: flex;
+    list-style-type: none;
+    align-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    
+} 
+li{
+    margin-left: 10px;
+    border: 1px solid black;
+}
+.listItem {
+    display: flex;
+align-items: baseline;
+align-content: space-between;
+}
+button{
+    margin-left: 10px;
+}
+input{
+    margin-left: 10px;
+    border: 1px solid black;
+}
