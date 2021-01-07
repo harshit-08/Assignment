@@ -6,11 +6,16 @@ import ListItem from '../Components/ListItem'
 
 function List() {
     const [userData, setUserData] = useState([])
-    const [id, setId] = useState("")
+
     const [custName, setCustName] = useState("")
     const [custEmail, setCustEmail] = useState("")
     const [product, setProduct] = useState("")
     const [quantity, setQuantity] = useState("")
+
+    let key = 0;
+    const getKey = () => {
+        return key++;
+    }
 
 
     useEffect(() => {
@@ -28,46 +33,45 @@ function List() {
 
 
     }, []);
-    // console.log(userData);
+
 
     const newOrderHandler = (e) => {
+        if (custName.trim().length != 0 && custEmail.trim().length != 0 && product.trim().length != 0 && quantity.trim().length != 0) {
+            db.collection('users').add({
 
-        db.collection('users').add({
-            id: id,
-            custName: custName,
-            custEmail: custEmail,
-            product: product,
-            quantity: quantity,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        setId('')
-        setCustName('')
-        setCustEmail('')
-        setProduct('')
-        setQuantity('')
+                custName: custName,
+                custEmail: custEmail,
+                product: product,
+                quantity: quantity,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            setCustName('')
+            setCustEmail('')
+            setProduct('')
+            setQuantity('')
+        } else {
+            alert("Please enter all fields")
+        }
+
     }
-    // if (userData.length != 0) {
-    //     console.log(userData.data)
-    // }
+
     const handleUpdate = (input) => {
-        console.log(input);
-        const snapShot = db.collection('users').where("id", "==", input.id);
+
+        const snapShot = db.collection('users').doc(input.id);
         const getDoc = snapShot.get()
             .then(doc => {
                 if (doc.exists) {
-                    db.collection("users").where("id", "==", id)
-                        .get()
-                        .then(function (querySnapshot) {
-                            querySnapshot.forEach(function (doc) {
-                                doc.set({
-                                    custName: input.custName,
-                                    custEmail: input.custEmail,
-                                    product: input.product,
-                                    quantity: input.quantity,
-                                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                                })
-                            });
-                        })
+
+                    db.collection("users").doc(input.id).update({
+                        custName: input.custName,
+                        custEmail: input.custEmail,
+                        product: input.product,
+                        quantity: input.quantity,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+
+
                 } else {
                     db.collection('users').add({
                         id: input.id,
@@ -77,6 +81,7 @@ function List() {
                         quantity: input.quantity,
                         timestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
+                    console.log("Does not exist");
                 }
 
             })
@@ -89,12 +94,7 @@ function List() {
 
     return (
         <div className="list">
-            <input
-                type="text"
-                placeholder="Enter Id"
-                value={id}
-                onChange={e => setId(e.target.value)}
-            />
+
             <input
                 type="text"
                 placeholder="Enter Customer Name"
@@ -124,10 +124,10 @@ function List() {
                 Create New Order
             </button>
 
-            {userData.map(({ _id, data: { id, custName, custEmail, product, quantity } }) => (
-                <ListItem key={_id}
+            {userData.map(({ _id, data: { custName, custEmail, product, quantity } }) => (
+                <ListItem key={getKey()}
                     handleUpdate={handleUpdate}
-                    id={id}
+                    id={_id}
                     custName={custName}
                     custEmail={custEmail}
                     product={product}

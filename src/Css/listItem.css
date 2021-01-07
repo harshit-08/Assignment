@@ -1,6 +1,7 @@
 .listItem__ul{
-    
-    /* align-content: space-between; */
+
+    display: flex;
+
 }
 ul{
     display: flex;
@@ -12,17 +13,51 @@ ul{
 } 
 li{
     margin-left: 10px;
-    border: 1px solid black;
+    border: none;
+    height: 30px;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #00adb5;
+    font-size: large;
+    font-weight: 600;
+    margin-top: 20px;
+
 }
 .listItem {
     display: flex;
 align-items: baseline;
 align-content: space-between;
 }
-button{
+.listItem__ul button{
     margin-left: 10px;
+    /* border: none; */
+    height: 30px;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: whitesmoke;
+    font-size: large;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
 }
-input{
+.listItem__ul button:hover{
     margin-left: 10px;
     border: 1px solid black;
+    height: 30px;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: whitesmoke;
+    font-size: large;
+    font-weight: 600;
+    cursor: pointer;
+}
+.listItem__ul input{
+    height: 30px;
+    margin-left: 10px;
+    border: 1px solid black;
+    margin-top: 20px;
+    
 }

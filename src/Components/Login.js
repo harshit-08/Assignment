@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import '../Css/login.css'
-import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, selectUser } from '../features/counter/userSlice'
+import { useDispatch } from 'react-redux';
+import { login } from '../features/counter/userSlice'
 import firebase from 'firebase'
 import { auth } from '../firebase'
 
@@ -10,7 +10,7 @@ import { auth } from '../firebase'
 function Login() {
 
     const dispatch = useDispatch()
-    const user = useSelector(selectUser)
+
 
     const onSubmit = () => {
         var provider = new firebase.auth.GoogleAuthProvider();
