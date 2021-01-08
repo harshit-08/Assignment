@@ -19,6 +19,7 @@ function List() {
 
     //Add json file data effect
     useEffect(() => {
+
         addList()
     }, [])
 
