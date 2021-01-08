@@ -10154,23 +10154,55 @@ const userCollection = [
     }
 ]
 
+export const addList = () => {
+    userCollection.forEach((obj) => {
+        const snapShot = db.collection('users').where('orderID', '==', obj.id);
+        const getDoc = snapShot.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    db.collection('users').add({
+                        orderID: obj.id,
+                        custName: obj.customer_name,
+                        custEmail: obj.customer_email,
+                        product: obj.product,
+                        quantity: obj.quantity,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
-userCollection.forEach((obj) => {
-    const snapShot = db.collection('users').where('orderID', '==', obj.id);
-    const getDoc = snapShot.get()
-        .then(doc => {
-            if (!doc.exists) {
-                db.collection('users').add({
-                    orderID: obj.id,
-                    custName: obj.customer_name,
-                    custEmail: obj.customer_email,
-                    product: obj.product,
-                    quantity: obj.quantity,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    })
 
-                })
-            }
-        })
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                // alert('Something went wrong. please try again')
+            })
 
-})
+    })
+
+
+}
+
+// userCollection.forEach((obj) => {
+//     const snapShot = db.collection('users').where('orderID', '==', obj.id);
+//     const getDoc = snapShot.get()
+//         .then(doc => {
+//             if (!doc.exists) {
+//                 db.collection('users').add({
+//                     orderID: obj.id,
+//                     custName: obj.customer_name,
+//                     custEmail: obj.customer_email,
+//                     product: obj.product,
+//                     quantity: obj.quantity,
+//                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
+//                 })
+
+//             }
+//         })
+//         .catch((error) => {
+//             console.log(error)
+//             // alert('Something went wrong. please try again')
+//         })
+
+// })
 

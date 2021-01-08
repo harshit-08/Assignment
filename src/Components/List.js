@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../Css/list.css'
-import { db } from '../firebase'
+import { db, addList } from '../firebase'
 import firebase from 'firebase'
 import ListItem from '../Components/ListItem'
 
@@ -16,6 +16,11 @@ function List() {
     const getKey = () => {
         return key++;
     }
+
+    useEffect(() => {
+        console.log('component mounted');
+        addList()
+    }, [])
 
 
     useEffect(() => {
