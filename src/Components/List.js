@@ -6,7 +6,7 @@ import ListItem from '../Components/ListItem'
 
 function List() {
     const [userData, setUserData] = useState([])
-
+    const [orderID, setOrderId] = useState("")
     const [custName, setCustName] = useState("")
     const [custEmail, setCustEmail] = useState("")
     const [product, setProduct] = useState("")
@@ -36,9 +36,9 @@ function List() {
 
 
     const newOrderHandler = (e) => {
-        if (custName.trim().length != 0 && custEmail.trim().length != 0 && product.trim().length != 0 && quantity.trim().length != 0) {
+        if (custName.trim().length !== 0 && custEmail.trim().length !== 0 && product.trim().length !== 0 && quantity.trim().length !== 0) {
             db.collection('users').add({
-
+                orderID: orderID,
                 custName: custName,
                 custEmail: custEmail,
                 product: product,
@@ -50,6 +50,7 @@ function List() {
             setCustEmail('')
             setProduct('')
             setQuantity('')
+            setOrderId('')
         } else {
             alert("Please enter all fields")
         }
@@ -64,6 +65,7 @@ function List() {
                 if (doc.exists) {
 
                     db.collection("users").doc(input.id).update({
+                        orderID: input.orderID,
                         custName: input.custName,
                         custEmail: input.custEmail,
                         product: input.product,
@@ -74,7 +76,7 @@ function List() {
 
                 } else {
                     db.collection('users').add({
-                        id: input.id,
+                        orderID: input.orderID,
                         custName: input.custName,
                         custEmail: input.custEmail,
                         product: input.product,
@@ -85,7 +87,9 @@ function List() {
                 }
 
             })
+
             .catch(err => {
+                alert("Something went wrong. Please try again")
                 console.log(err);
             })
 
@@ -94,7 +98,11 @@ function List() {
 
     return (
         <div className="list">
-
+            <input type="text"
+                placeholder="Enter Order ID"
+                value={orderID}
+                onChange={e => setOrderId(e.target.value)}
+            />
             <input
                 type="text"
                 placeholder="Enter Customer Name"
@@ -124,9 +132,10 @@ function List() {
                 Create New Order
             </button>
 
-            {userData.map(({ _id, data: { custName, custEmail, product, quantity } }) => (
+            {userData.map(({ _id, data: { orderID, custName, custEmail, product, quantity } }) => (
                 <ListItem key={getKey()}
                     handleUpdate={handleUpdate}
+                    orderID={orderID}
                     id={_id}
                     custName={custName}
                     custEmail={custEmail}

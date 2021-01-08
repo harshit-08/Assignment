@@ -1,16 +1,44 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import '../Css/listItem.css'
 import { db } from '../firebase'
-const ListItem = forwardRef(({ handleUpdate, id, custName, custEmail, product, quantity }, ref) => {
-
-
-    const [_custName, setCustName] = useState(custName)
-    const [_custEmail, setCustEmail] = useState(custEmail)
-    const [_product, setProduct] = useState(product)
+const ListItem = forwardRef(({ handleUpdate, orderID, id, custName, custEmail, product, quantity }, ref) => {
+    const [_orderID, setOrderID] = useState('')
+    const [_custName, setCustName] = useState('')
+    const [_custEmail, setCustEmail] = useState('')
+    const [_product, setProduct] = useState('')
     const [_quantity, setQuantity] = useState(quantity)
     const [isEditing, setIsEditing] = useState(false)
 
+
+
+    var docRef = db.collection("users").where('orderID', '==', orderID);
+    docRef.get()
+        .then(function (doc) {
+            if (doc.exists) {
+                setOrderID(doc.orderID)
+                setCustName(doc.custName)
+                setCustEmail(doc.custEmail)
+                setProduct(doc.product)
+                setQuantity(doc.quantity)
+            } else {
+                setOrderID(orderID)
+                setCustName(custName)
+                setCustEmail(custEmail)
+                setProduct(product)
+                setQuantity(quantity)
+
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+
+
+
+
+
+
     const obj = {
+        orderID: _orderID,
         id: id,
         custName: _custName,
         custEmail: _custEmail,
@@ -28,6 +56,7 @@ const ListItem = forwardRef(({ handleUpdate, id, custName, custEmail, product, q
     const updateHandler = (e) => {
         e.preventDefault()
         toggleHandler()
+        console.log(obj);
         handleUpdate(obj)
 
     }
@@ -35,7 +64,7 @@ const ListItem = forwardRef(({ handleUpdate, id, custName, custEmail, product, q
 
     const deleteHandler = (id) => {
 
-        db.collection("users").doc(id).delete().then(function () {
+        db.collection("users").doc(id).delete().then(() => {
 
         }).catch((error) => {
             console.log(error);
@@ -51,6 +80,11 @@ const ListItem = forwardRef(({ handleUpdate, id, custName, custEmail, product, q
             {/* Conditionally rendering to toggle between editing and edited state */}
 
             {isEditing ? <form onSubmit={updateHandler} className="listItem__ul">
+                <input
+                    type="text"
+                    defaultValue={orderID}
+                    onChange={(e) => { setOrderID(e.target.value) }}
+                />
                 <input
                     type="text"
                     defaultValue={custName}
@@ -81,7 +115,7 @@ const ListItem = forwardRef(({ handleUpdate, id, custName, custEmail, product, q
                 <ul className="listItem__ul">
 
                     <li>
-                        {id}
+                        {orderID}
                     </li>
                     <li>
                         {custName}
