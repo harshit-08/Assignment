@@ -17,8 +17,8 @@ function List() {
         return key++;
     }
 
+    //Add json file data effect
     useEffect(() => {
-        console.log('component mounted');
         addList()
     }, [])
 
